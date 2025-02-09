@@ -1,7 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"log"
+	"github.com/joho/godotenv"
+)
 
 func main() {
-	fmt.Println("hello wornd")
+
+	godotenv.Load()
+
+	portString := os.Getenv("PORT")
+	if portString == ""{
+		log.Fatal("PORT is not found in environment.")
+	}
+	
+
+	fmt.Println("Port:", portString)
 }
