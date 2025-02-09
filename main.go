@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"os"
 	"log"
+	"net/http"
 	"github.com/joho/godotenv"
+	"github.com/go-chi/chi"
 )
 
 func main() {
@@ -16,6 +18,18 @@ func main() {
 		log.Fatal("PORT is not found in environment.")
 	}
 	
+	router := chi.NewRouter()
 
-	fmt.Println("Port:", portString)
+	srv := &http.Server{
+		Handler: router,
+		Addr: ":" + portString,
+	}
+
+	log.Printf("Server starting on port %v", portString)
+
+	err := srv.ListenAndServe()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }
